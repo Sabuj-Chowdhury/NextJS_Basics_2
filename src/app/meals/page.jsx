@@ -1,32 +1,48 @@
-// import {  useState } from "react";
-export const mealsFunction = async () => {
-  const res = await fetch(
-    `https://www.themealdb.com/api/json/v1/1/search.php?s=`
-  );
-  const data = res.json();
+"use client";
 
-  return data;
-};
+import { useEffect, useState } from "react";
+// export const mealsFunction = async () => {
+//   const res = await fetch(
+//     `https://www.themealdb.com/api/json/v1/1/search.php?s=`
+//   );
+//   const data = res.json();
 
-const MealsPage = async () => {
-  //   const [allMeals, setMeals] = useState([]);
-  //   const [search, setSearch] = useState("");
+//   return data;
+// };
 
-  const { meals } = await mealsFunction();
+const MealsPage = () => {
+  const [meals, setMeals] = useState([]);
+  const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  console.log(meals);
+  const fetchMeals = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch(
+        `https://www.themealdb.com/api/json/v1/1/search.php?s=${search}`
+      );
+      const data = await res.json();
+      setMeals(data?.meals || []);
+      setLoading(false);
+      return data.meals;
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+      return [];
+    }
+  };
 
-  //   useEffect(() => {
-  //     mealsFunction();
-  //   }, [search]);
+  useEffect(() => {
+    fetchMeals();
+  }, [search]);
+
+  if (loading) {
+    return "Loading....";
+  }
 
   return (
     <div>
-      {meals.map((meal, idx) => (
-        <div>
-          <img src={meal.strSource} alt="" />
-        </div>
-      ))}
+      <p>{JSON.stringify(meals)}</p>
     </div>
   );
 };

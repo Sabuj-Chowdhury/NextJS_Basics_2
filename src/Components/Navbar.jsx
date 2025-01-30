@@ -16,9 +16,9 @@ const Navbar = () => {
           <Link href="/post">
             <li>All Posts</li>
           </Link>
-          <Link href="/meals">
+          {/* <Link href="/meals">
             <li>All Meals</li>
-          </Link>
+          </Link> */}
         </ul>
       </nav>
     );
