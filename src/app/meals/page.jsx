@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 // export const mealsFunction = async () => {
 //   const res = await fetch(
@@ -55,6 +56,14 @@ const MealsPage = () => {
             <p>
               {id + 1} : {meal?.strMeal}
             </p>
+            <div>
+              <Image
+                src={meal?.strMealThumb}
+                alt={meal?.strMeal}
+                width={641}
+                height={641}
+              />
+            </div>
             <p>{meal?.strInstructions}</p>
           </div>
         ))}
